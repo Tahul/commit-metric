@@ -36,7 +36,7 @@ app.listen(process.env.SERVER_PORT ? process.env.SERVER_PORT : 3005, () => {
 })
 
 /**
- * Get metrics from metrics data object from metrics array
+ * Get metrics data object from metrics array
  */
 const getMetrics = async () => {
   let result = {}
