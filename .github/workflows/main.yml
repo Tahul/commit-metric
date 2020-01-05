@@ -8,9 +8,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Running tests
+      - name: Deploy & restart
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
