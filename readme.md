@@ -12,11 +12,12 @@ Create your .env from the example one.
 cp .env.example .env
 ```
 
-Edit the .env to add your personal access token and username from GitHub.
+Edit the .env to add your personal access token and username from GitHub and/or GitLab.
 
-You can get one [here](https://github.com/settings/tokens).
+You can get one [here](https://github.com/settings/tokens) for GitHub, or [here](https://gitlab.com/profile/personal_access_tokens) for GitLab.
 
 ```bash
+GITLAB_TOKEN={YOUR_TOKEN}
 GITHUB_USERNAME={YOUR_USERNAME}
 GITHUB_TOKEN={YOUR_TOKEN}
 ```
