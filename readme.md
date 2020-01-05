@@ -6,11 +6,18 @@ Just a simple API to feed a Momentum commit counter metric.
 
 ## Installation
 
-Edit the .env to add your personal access token from GitHub.
+Create your .env from the example one.
+
+```bash
+cp .env.example .env
+```
+
+Edit the .env to add your personal access token and username from GitHub.
 
 You can get one [here](https://github.com/settings/tokens).
 
-```
+```bash
+GITHUB_USERNAME={YOUR_USERNAME}
 GITHUB_TOKEN={YOUR_TOKEN}
 ```
 

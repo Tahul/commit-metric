@@ -29,7 +29,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 /**
  * SERVER CREATION
  */
-app.listen(3005, () => {
+app.listen(process.env.SERVER_PORT ? process.env.SERVER_PORT : 3005, () => {
   console.log('Commit Metric is running!');
 });
 
