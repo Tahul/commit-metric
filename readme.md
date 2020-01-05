@@ -6,6 +6,14 @@ Just a simple API to feed a Momentum commit counter metric.
 
 ## Installation
 
+Git clone and install the repository.
+
+```bash
+git clone git@github.com:Tahul/commit-metric.git
+
+npm install
+```
+
 Create your .env from the example one.
 
 ```bash
@@ -22,17 +30,14 @@ GITHUB_USERNAME={YOUR_USERNAME}
 GITHUB_TOKEN={YOUR_TOKEN}
 ```
 
+Run the server for development if you want to edit, or for production if you are hosting it.
+
 ```bash
-// Git clone the repository
-git clone git@github.com:Tahul/commit-metric.git
-
-// NPM Install
-npm install
-
 // PM2 start dev (watcher, ts-node)
 pm2 start --only dev
 
 // PM2 start production
+npm run compile
 pm2 start --only prod
 ```
 
