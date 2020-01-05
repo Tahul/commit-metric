@@ -4,6 +4,11 @@
 import * as express from 'express';
 import * as dotenv from 'dotenv';
 
+// - Metrics
+import githubMetric from './metrics/github';
+
+const metrics = [githubMetric];
+
 /**
  * INIT
  */
@@ -17,10 +22,8 @@ const app: express.Application = express();
 /**
  * ROUTES
  */
-app.get('/', (req: express.Request, res: express.Response) => {
-  res.json({
-    test: 1,
-  });
+app.get('/', async (req: express.Request, res: express.Response) => {
+  res.json(await getMetrics());
 });
 
 /**
@@ -29,3 +32,16 @@ app.get('/', (req: express.Request, res: express.Response) => {
 app.listen(3005, () => {
   console.log('Commit Metric is running!');
 });
+
+/**
+ * Get metrics from metrics data object from metrics array
+ */
+const getMetrics = async () => {
+  let result = {};
+
+  for (const metric of metrics) {
+    result = Object.assign(result, await metric());
+  }
+
+  return result;
+};
