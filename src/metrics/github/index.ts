@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async () => {
   const today = new Date().toLocaleDateString('en-US');
-  let count = 0;
+  let githubCommits = 0;
 
   const request = await axios.get('https://api.github.com/users/Tahul/events', {
     headers: {
@@ -13,12 +13,12 @@ export default async () => {
   for (const event of request.data) {
     const date = new Date(event.created_at).toLocaleDateString('en-US');
 
-    if (today === date) {
-      count++;
+    if (event.type === 'PushEvent' && today === date) {
+      githubCommits = githubCommits + event.payload.size;
     }
   }
 
   return {
-    githubCommits: count,
+    githubCommits,
   };
 };
