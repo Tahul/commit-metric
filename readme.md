@@ -2,7 +2,9 @@
 
 Just a simple API to feed a Momentum commit counter metric.
 
-![Commit Metric](https://i.imgur.com/Shz1n3w.png)
+![Commit Metric](https://i.imgur.com/Shz1n3w.png).
+
+Response example [here](https://metrics.ipseity.fr)
 
 ## Installation
 
