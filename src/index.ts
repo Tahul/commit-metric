@@ -7,9 +7,8 @@ import * as dotenv from 'dotenv'
 // - Metrics
 import githubMetric from './metrics/github'
 import gitlabMetric from './metrics/gitlab'
-import { global } from './metrics'
 
-export const metrics = [githubMetric, gitlabMetric, global]
+export const metrics = [githubMetric, gitlabMetric]
 
 /**
  * INIT
@@ -39,10 +38,18 @@ app.listen(process.env.SERVER_PORT ? process.env.SERVER_PORT : 3005, () => {
  * Get metrics data object from metrics array
  */
 const getMetrics = async () => {
-  let result = {}
+  let result = {
+    globalCommits: 0,
+  }
 
+  // Looping through each registered metrics
   for (const metric of metrics) {
     result = Object.assign(result, await metric())
+  }
+
+  // Handling global count
+  for (const value of Object.values(result)) {
+    result.globalCommits = result.globalCommits + value
   }
 
   return result
