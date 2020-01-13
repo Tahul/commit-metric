@@ -13,6 +13,7 @@ export default async (): Promise<IGithubMetric> => {
   // Check if GitHub parameters are present
   if (process.env.GITHUB_TOKEN && process.env.GITHUB_USERNAME) {
     const today = new Date().toLocaleDateString('en-US')
+    console.log('Today: ', today)
 
     const request = await axios.get(
       `https://api.github.com/users/${process.env.GITHUB_USERNAME}/events`,
@@ -27,7 +28,7 @@ export default async (): Promise<IGithubMetric> => {
       const date = new Date(event.created_at).toLocaleDateString('en-US')
 
       if (event.type === 'PushEvent' && today === date) {
-        githubCommits = githubCommits + event.payload.size
+        githubCommits = githubCommits + parseInt(event.payload.size)
       }
     }
   }
