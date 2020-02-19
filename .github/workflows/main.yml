@@ -17,9 +17,9 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd metrics
-            pm2 kill
+            pm2 stop commit-metric-prod
             git reset --hard master
             git pull
             npm install
             npm run compile
-            pm2 start --only prod
+            pm2 start --only commit-metric-prod

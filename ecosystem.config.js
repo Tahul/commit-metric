@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'dev',
+      name: 'commit-metric-dev',
       script: 'ts-node',
       args: 'src/index.ts',
       instances: 1,
@@ -11,11 +11,11 @@ module.exports = {
       max_memory_restart: '1G',
     },
     {
-      name: 'prod',
+      name: 'commit-metric-prod',
       script: 'node',
       args: 'build/src/index.js',
       instances: 1,
       autorestart: true,
     },
   ],
-};
+}

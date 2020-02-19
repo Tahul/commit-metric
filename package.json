@@ -18,7 +18,7 @@
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run check",
-    "watch:start": "npm run compile && node build/index.js"
+    "dev": "ts-node-dev --respawn --ignore-watch node_modules,build --watch --exit-child --clear src/index.ts"
   },
   "devDependencies": {
     "@types/node": "^10.0.3",
@@ -32,6 +32,7 @@
     "axios": "^0.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "ts-node": "^8.5.4"
+    "ts-node": "^8.5.4",
+    "ts-node-dev": "^1.0.0-pre.44"
   }
 }
