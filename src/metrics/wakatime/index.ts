@@ -1,48 +1,36 @@
 import axios from 'axios'
+import * as Moment from 'moment'
 // Not using import because of TypeScript checking module declaration
 const {base64encode} = require('nodejs-base64')
 
 export interface IWakaTimeMetric {
-  wakaTimeSpent: number
-  wakaTimeSpentHumanlyReadable: {
-    full: string
-    h: number
-    m: number
-    s: number
+  wakaTime: {
+    digital: string
+    hours: number
+    minutes: number
+    text: string
+    total_seconds: number
   }
 }
-
-const formatHumanlyReadable = (secs: number) => {
-  let hours = Math.floor(secs / (60 * 60))
-
-  let minutesDivisor = secs % (60 * 60)
-  let minutes = Math.floor(minutesDivisor / 60)
-
-  let secondsDivisor = minutesDivisor % 60
-  let seconds = Math.ceil(secondsDivisor)
-
-  return {
-    full: `${hours < 10 ? '0' + hours : hours}:${
-      minutes < 10 ? '0' + minutes : minutes
-    }:${seconds < 10 ? '0' + seconds : seconds}`,
-    h: hours,
-    m: minutes,
-    s: seconds,
-  }
-}
-
 /**
  * Retrieve WakaTime metrics if parameters are set in `.env.`
  */
 export default async (): Promise<IWakaTimeMetric> => {
-  let wakaTimeSpent = 0
-
   // Check if WakaTime parameters are present
   if (process.env.WAKATIME_API_KEY) {
     const apiKey = base64encode(process.env.WAKATIME_API_KEY)
+    const start = Moment().set('h', 0).format('YYYY-MM-DDTHH:mm:ss')
+    const end = Moment()
+      .set('h', 23)
+      .set('m', 59)
+      .set('s', 59)
+      .format('YYYY-MM-DDTHH:mm:ss')
 
+    /**
+     * Get summary from WakaTime
+     */
     const request = await axios.get(
-      'https://wakatime.com/api/v1/users/current/durations?date=21-04-2020',
+      `https://wakatime.com/api/v1/users/current/summaries?start=${start}&end=${end}`,
       {
         headers: {
           Authorization: `Basic ${apiKey}`,
@@ -50,15 +38,18 @@ export default async (): Promise<IWakaTimeMetric> => {
       }
     )
 
-    for (const entry of request.data.data) {
-      wakaTimeSpent += entry.duration
+    return {
+      wakaTime: request.data.data[0].grand_total,
     }
   }
 
-  wakaTimeSpent = Math.round(wakaTimeSpent)
-
   return {
-    wakaTimeSpent,
-    wakaTimeSpentHumanlyReadable: formatHumanlyReadable(wakaTimeSpent),
+    wakaTime: {
+      digital: '',
+      hours: 0,
+      minutes: 0,
+      text: 'error',
+      total_seconds: 0,
+    },
   }
 }
