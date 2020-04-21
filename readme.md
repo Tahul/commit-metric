@@ -2,6 +2,8 @@
 
 Just a simple API to feed a Momentum commit counter metric.
 
+Can also be used for displaying your commits or WakaTime daily time spent anywhere.
+
 ![Commit Metric](https://i.imgur.com/Shz1n3w.png).
 
 Response example [here](https://metrics.ipseity.fr)
@@ -27,9 +29,10 @@ Edit the .env to add your personal access token and username from GitHub and/or 
 You can get one [here](https://github.com/settings/tokens) for GitHub, or [here](https://gitlab.com/profile/personal_access_tokens) for GitLab.
 
 ```bash
-GITLAB_TOKEN={YOUR_TOKEN}
+GITLAB_TOKEN={YOUR_GITLAB_TOKEN}
 GITHUB_USERNAME={YOUR_USERNAME}
-GITHUB_TOKEN={YOUR_TOKEN}
+GITHUB_TOKEN={YOUR_GITHUB_TOKEN}
+WAKATIME_API_KEY={YOUR_WAKATIME_TOKEN}
 ```
 
 Run the server for development if you want to edit, or for production if you are hosting it.
