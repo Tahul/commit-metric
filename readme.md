@@ -33,6 +33,7 @@ GITLAB_TOKEN={YOUR_GITLAB_TOKEN}
 GITHUB_USERNAME={YOUR_USERNAME}
 GITHUB_TOKEN={YOUR_GITHUB_TOKEN}
 WAKATIME_API_KEY={YOUR_WAKATIME_TOKEN}
+CACHE_TIME=3600
 ```
 
 Run the server for development if you want to edit, or for production if you are hosting it.
@@ -47,6 +48,14 @@ pm2 start --only prod
 ```
 
 Just deploy the code on a server (can probably be a Heroku or Now instance) and you're ready to go.
+
+## Caching
+
+By default the app will cache your data for 1 hour, to avoid spamming the API services too frequently.
+
+You can disable this by setting your `CACHE_TIME` .env value to 1.
+
+You can also configure the caching duration with that parameters, in seconds.
 
 ## Usage
 
