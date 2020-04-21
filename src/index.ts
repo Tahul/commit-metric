@@ -7,8 +7,9 @@ import * as dotenv from 'dotenv'
 // - Metrics
 import githubMetric from './metrics/github'
 import gitlabMetric from './metrics/gitlab'
+import wakatimeMetric from './metrics/wakatime'
 
-export const metrics = [githubMetric, gitlabMetric]
+export const metrics = [githubMetric, gitlabMetric, wakatimeMetric]
 
 /**
  * INIT
@@ -46,12 +47,20 @@ const getMetrics = async () => {
 
   // Looping through each registered metrics
   for (const metric of metrics) {
-    result = Object.assign(result, await metric())
+    try {
+      result = Object.assign(result, await metric())
+    } catch (e) {
+      console.log('Cannot retrieve metric...')
+    }
   }
 
   // Handling global count
-  for (const value of Object.values(result)) {
-    result.globalCommits = result.globalCommits + value
+  for (const entry of Object.entries(result)) {
+    const [key, value] = entry
+
+    if (key.includes('Commits')) {
+      result.globalCommits = result.globalCommits + value
+    }
   }
 
   return result
