@@ -14,7 +14,7 @@ export default async (): Promise<IGitlabMetric> => {
   if (process.env.GITLAB_TOKEN) {
     const today = new Date().toLocaleDateString('en-US')
 
-    const request = await axios.get('https://gitlab.com/api/v4/events', {
+    const request = await axios.get(`${process.env.GITLAB_BASEURL}/api/v4/events`, {
       headers: {
         'PRIVATE-TOKEN': `${process.env.GITLAB_TOKEN}`,
       },
