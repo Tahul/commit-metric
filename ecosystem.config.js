@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'commit-metric-prod',
       script: 'node',
-      args: 'build/src/index.js',
+      args: '-r dotenv/config build/src/index.js',
       instances: 1,
       autorestart: true,
     },
