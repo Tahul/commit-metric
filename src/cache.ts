@@ -6,8 +6,8 @@ import * as mcache from 'memory-cache'
 
 const cache = (duration: number): any => {
   return (req: any, res: any, next: any) => {
-    let key = '__express__' + req.originalUrl || req.url
-    let cached = mcache.get(key)
+    const key = '__express__' + req.originalUrl || req.url
+    const cached = mcache.get(key)
 
     if (cached) {
       res.send(cached)

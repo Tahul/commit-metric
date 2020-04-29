@@ -6,11 +6,13 @@ import * as dotenv from 'dotenv'
 import cache from './cache'
 
 // - Metrics
-import githubMetric from './metrics/github'
-import gitlabMetric from './metrics/gitlab'
-import wakatimeMetric from './metrics/wakatime'
+import githubMetric, {IGithubMetric} from './metrics/github'
+import gitlabMetric, {IGitlabMetric} from './metrics/gitlab'
+import wakatimeMetric, {IWakaTimeMetric} from './metrics/wakatime'
 
 export const metrics = [githubMetric, gitlabMetric, wakatimeMetric]
+
+type MetricResult = IGitlabMetric | IGithubMetric | IWakaTimeMetric
 
 /**
  * INIT
@@ -51,12 +53,14 @@ app.listen(port, () => {
  */
 const getMetrics = async () => {
   // Init result object
-  let result = {
+  const result = {
     globalCommits: 0,
   }
 
   // Init Promise chain for all metrics
-  const metricPromises: Promise<any>[] = metrics.map((metric: any) => metric())
+  const metricPromises: Promise<
+    MetricResult
+  >[] = metrics.map((metric: Function) => metric())
 
   // Exec Promise chain for all metrics
   const responses = await Promise.all(metricPromises)
