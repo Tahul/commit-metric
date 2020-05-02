@@ -14,6 +14,7 @@ const cache = (duration: number): any => {
       return
     } else {
       res.sendResponse = res.send
+
       res.send = (body: any) => {
         mcache.put(key, body, duration * 1000)
         res.sendResponse(body)
