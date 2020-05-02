@@ -30,7 +30,7 @@ You can get one [here](https://github.com/settings/tokens) for GitHub, or [here]
 
 ```bash
 GITLAB_TOKEN={YOUR_GITLAB_TOKEN}
-GITLAB_BASEURL={YOUR_GITLAB_HOSTNAME}
+GITLAB_BASEURL={YOUR_GITLAB_HOSTNAME} // This can be null, by default it will be: https://gitlab.com
 GITHUB_USERNAME={YOUR_USERNAME}
 GITHUB_TOKEN={YOUR_GITHUB_TOKEN}
 WAKATIME_API_KEY={YOUR_WAKATIME_TOKEN}
