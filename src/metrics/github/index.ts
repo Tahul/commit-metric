@@ -49,7 +49,7 @@ export default async (): Promise<IGithubMetric> => {
 
     // Get stars
     const requestStars = await axios.get(
-        `${apiUrl}/starred?sort=created&direction=desc`,
+        `${apiUrl}/starred?sort=created&direction=desc&per_page=5`,
         {
           headers: {
             Authorization: `token ${process.env.GITHUB_TOKEN}`,
