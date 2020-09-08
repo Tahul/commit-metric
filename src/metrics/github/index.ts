@@ -1,7 +1,13 @@
 import axios from 'axios'
 
 export interface IGitHubStar {
-
+  name: string
+  full_name: string
+  description: string
+  created_at: string
+  stargazers_count: number
+  watchers_count: number
+  url: string
 }
 
 export interface IGithubMetric {
@@ -18,7 +24,7 @@ export default async (): Promise<IGithubMetric> => {
 
   // Check if GitHub parameters are present
   if (process.env.GITHUB_TOKEN && process.env.GITHUB_USERNAME) {
-    const today = new Date().toLocaleDateString('en-US')
+    const today: string = new Date().toLocaleDateString('en-US')
     const apiUrl = `https://api.github.com/users/${process.env.GITHUB_USERNAME}`
 
     // Get commits
@@ -33,7 +39,7 @@ export default async (): Promise<IGithubMetric> => {
 
     // Cast commits
     for (const event of requestCommits.data) {
-      const date = new Date(event.created_at).toLocaleDateString('en-US')
+      const date: string = new Date(event.created_at).toLocaleDateString('en-US')
 
       if (event.type === 'PushEvent' && today === date) {
         githubCommits = githubCommits + parseInt(event.payload.size)
@@ -43,7 +49,7 @@ export default async (): Promise<IGithubMetric> => {
 
     // Get stars
     const requestStars = await axios.get(
-        `${apiUrl}/starred`,
+        `${apiUrl}/starred?sort=created&direction=desc`,
         {
           headers: {
             Authorization: `token ${process.env.GITHUB_TOKEN}`,
@@ -52,6 +58,19 @@ export default async (): Promise<IGithubMetric> => {
     )
 
     // Cast stars
+    githubStars = requestStars.data.map((item: any) => {
+      const { name, full_name, description, created_at, stargazers_count, watchers_count, html_url } = item
+
+      return {
+        name,
+        full_name,
+        description,
+        created_at,
+        stargazers_count,
+        watchers_count,
+        url: html_url
+      }
+    })
   }
 
   return {
