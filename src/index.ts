@@ -58,9 +58,9 @@ const getMetrics = async () => {
   }
 
   // Init Promise chain for all metrics
-  const metricPromises: Promise<
-    MetricResult
-  >[] = metrics.map((metric: Function) => metric())
+  const metricPromises: Promise<MetricResult>[] = metrics.map(metric =>
+    metric()
+  )
 
   // Exec Promise chain for all metrics
   const responses = await Promise.all(metricPromises)
